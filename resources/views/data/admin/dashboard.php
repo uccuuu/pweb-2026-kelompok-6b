@@ -1,0 +1,147 @@
+
+<?php
+
+return [
+    // Dummy data statistik dashboard
+    'statistik' => [
+        [
+            'judul' => 'Total Aset Kantor',
+            'jumlah' => 128,
+            'satuan' => 'Unit',
+            'keterangan' => '+4 aset baru bulan ini',
+            'ikon' => 'inventory_2',
+            'warna_ikon' => 'bg-secondary-container/40 text-secondary',
+            'warna_badge' => 'bg-surface-container-high text-secondary',
+            'warna_teks' => 'text-secondary',
+            'ikon_keterangan' => 'trending_up',
+        ],
+        [
+            'judul' => 'Aset Individu',
+            'jumlah' => 76,
+            'satuan' => 'Barang',
+            'keterangan' => 'Ditugaskan ke staf spesifik',
+            'ikon' => 'person_check',
+            'warna_ikon' => 'bg-surface-container text-on-surface',
+            'warna_badge' => 'bg-secondary/10 text-secondary',
+            'warna_teks' => 'text-tertiary',
+            'ikon_keterangan' => 'assignment_ind',
+        ],
+        [
+            'judul' => 'Aset Bersama',
+            'jumlah' => 52,
+            'satuan' => 'Barang',
+            'keterangan' => 'Digunakan bersama per unit',
+            'ikon' => 'group_work',
+            'warna_ikon' => 'bg-tertiary-container text-tertiary',
+            'warna_badge' => 'bg-surface-container-high text-tertiary',
+            'warna_teks' => 'text-tertiary',
+            'ikon_keterangan' => 'corporate_fare',
+        ],
+        [
+            'judul' => 'Laporan Kerusakan',
+            'jumlah' => 8,
+            'satuan' => 'Tiket',
+            'keterangan' => '5 Perlu tindak lanjut, 3 Baru',
+            'ikon' => 'report_problem',
+            'warna_ikon' => 'bg-error-container/60 text-error',
+            'warna_badge' => 'bg-primary-container text-on-primary-container',
+            'warna_teks' => 'text-error',
+            'ikon_keterangan' => 'priority_high',
+        ],
+    ],
+
+    // Dummy data laporan kerusakan
+    'laporanKerusakan' => [
+        [
+            'barang' => 'Laptop Lenovo ThinkPad',
+            'kode' => 'INV-2026-001',
+            'unit' => 'Unit Administrasi',
+            'pelapor' => 'Nadia Putri (Staf)',
+            'waktu' => '15 Menit yang lalu',
+            'deskripsi' => 'Layar laptop retak di bagian kanan bawah setelah tersenggol di meja kerja, backlight masih menyala sebagian.',
+            'kode_qr' => 'SCAN-MEJA-ADM-04',
+            'ikon' => 'laptop_mac',
+            'status' => 'Baru',
+            'status_class' => 'bg-error/10 text-error',
+            'aksi' => 'Perlu Peninjauan',
+        ],
+        [
+            'barang' => 'Mesin Fotokopi Canon',
+            'kode' => 'INV-2026-002',
+            'unit' => 'Unit Administrasi',
+            'pelapor' => 'Pengunjung (Publik QR)',
+            'waktu' => '2 Jam yang lalu',
+            'deskripsi' => 'Paper jam berulang di baki kertas 2 dan terdengar bunyi berdecit saat proses scan dokumen.',
+            'kode_qr' => 'SCAN-LOBBY-ADM-01',
+            'ikon' => 'print',
+            'status' => 'Baru',
+            'status_class' => 'bg-error/10 text-error',
+            'aksi' => 'Perlu Peninjauan',
+        ],
+        [
+            'barang' => 'Proyektor Epson',
+            'kode' => 'INV-2026-003',
+            'unit' => 'Unit Akademik',
+            'pelapor' => 'Rizky Akbar (Staf)',
+            'waktu' => 'Kemarin, 16:30',
+            'deskripsi' => 'Kabel HDMI bawaan longgar dan warna proyeksi dominan kuning saat dihubungkan ke laptop.',
+            'kode_qr' => 'SCAN-R-SIDANG-02',
+            'ikon' => 'videocam',
+            'status' => 'Ditandai',
+            'status_class' => 'bg-primary/20 text-on-surface',
+            'aksi' => 'Sudah Ditinjau',
+        ],
+    ],
+
+    // Dummy data distribusi barang per unit
+    'distribusiUnit' => [
+        [
+            'nama' => 'Unit Administrasi',
+            'jumlah' => 42,
+            'warna' => 'bg-secondary',
+        ],
+        [
+            'nama' => 'Unit Akademik',
+            'jumlah' => 38,
+            'warna' => 'bg-secondary-fixed-dim',
+        ],
+        [
+            'nama' => 'Unit Keuangan',
+            'jumlah' => 26,
+            'warna' => 'bg-primary-container',
+        ],
+        [
+            'nama' => 'Unit Teknologi Informasi',
+            'jumlah' => 22,
+            'warna' => 'bg-tertiary-fixed-dim',
+        ],
+    ],
+
+    // Dummy data aset terbaru
+    'asetTerbaru' => [
+        [
+            'nama' => 'Laptop Lenovo ThinkPad',
+            'kode' => 'INV-2026-001',
+            'lokasi' => 'Ruang Staf Adm Lt. 2',
+            'pic' => 'Nadia Putri',
+            'jabatan' => 'Staf Adm',
+            'jenis' => 'Individu',
+            'jenis_class' => 'bg-secondary/10 text-secondary',
+            'kondisi' => 'Siap Pakai',
+            'foto_pic' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuAbZWJNMznmY1PIJX8weUikq_Z7S695sqLQJYXjVs123z-eehAPYGgpk9tfO_9LK0zPkaS6tEizOa4iJ7VPOb5wPIWPRRaecjaBPkDyc0-yFgWeTs5k6KUmBVlHjka1X4-6WqS7I3BOyQlG5aKgQj2k07DrylFk3z0ul4_75tdS5We-7YColdHlh7Fi_mA3PpFcc7O1D2pgIyfzQbIrX1MG1wgy613fxckUfmfyO08',
+            'foto_barang' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuCUtZ4gCczcw4Hgr0WYrJhqdUzPt4pnz3HyhCmtP2eGW9tSPkGdtraSLWjR1ebSJVKjq8tNkHTcOKCrYqctW0YC5HUcRyixKO8QUkkEVIjb9DU8IeolDaJb8-ADHX5X4lSHb99J7AEl3w0OFxASPHtDAnuEKcWXiW7TggyAl6VVzxSVpWhT0XiHGTF8lkMZr35lY4Yi7V0lTzQmindP3iDRkaicx4EMsBJkRX57Pok',
+        ],
+        [
+            'nama' => 'Mesin Fotokopi Canon',
+            'kode' => 'INV-2026-002',
+            'lokasi' => 'Ruang Arsip & Dokumen',
+            'pic' => 'Andi Pratama',
+            'jabatan' => 'Koord. Fasilitas',
+            'jenis' => 'Bersama',
+            'jenis_class' => 'bg-surface-container-high text-tertiary',
+            'kondisi' => 'Pemeliharaan',
+            'foto_pic' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuD8LD3vJl03HezbitzJaQnD5J_ceM8LCBWquj4ivZJLeggCT9cBxe-dlXCE3XW47V_QekMCIlXTgIWQt2K6Vp8kzTU7FtGqkzTfcWTEg_l1woPtSXooB_P6artDj_JEmUTrDdQvLwN-uW5-dFa0udanbLvPtEHG3tTcj_6hpJ5AsQoFsuseDdHUYqn5AZzl1boSzGS_0jduOCFrEITsBLGvpr5OpTeLwF6M0OG-ALo',
+            'foto_barang' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuBVXMWGLUbIbZawtR_PqvZaWVHWlA5CIdOvnWjLXa3wGplcsZUAfpBd6cci6uqtTq7YJkdFXGctn5XJOQ80J0qJJPWHXK5u2CawRGiS4irC08mE1yaEZqrGFRmZ6qftP6c5tjyZLeuWW_58-e00REJbGfYSNAZ6UnW5EaqRA0afAUg_QHunX2NVGevKcFJkzEFYeyvnOtw0uVO5PR2QOEmPNiRah4ECz_czOTqemFE',
+        ],
+    ],
+];
