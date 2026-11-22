@@ -1,12 +1,158 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../**/*.vue";
+@source '../**/*.blade.php';
+@source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Typography */
+    --font-display-lg: 'Plus Jakarta Sans', sans-serif;
+    --font-display-sm: 'Plus Jakarta Sans', sans-serif;
+    --font-headline-lg: 'Plus Jakarta Sans', sans-serif;
+    --font-headline-md: 'Plus Jakarta Sans', sans-serif;
+    --font-headline-sm: 'Plus Jakarta Sans', sans-serif;
+    --font-body-lg: 'Plus Jakarta Sans', sans-serif;
+    --font-body-md: 'Plus Jakarta Sans', sans-serif;
+    --font-body-sm: 'Plus Jakarta Sans', sans-serif;
+    --font-label-lg: 'Plus Jakarta Sans', sans-serif;
+    --font-label-md: 'Plus Jakarta Sans', sans-serif;
+    --font-label-sm: 'Plus Jakarta Sans', sans-serif;
+
+    /* Typography Sizes */
+    --text-display-lg: 40px;
+    --text-display-lg--line-height: 48px;
+    --text-display-lg--letter-spacing: -0.02em;
+    --text-display-lg--font-weight: 700;
+
+    --text-display-sm: 32px;
+    --text-display-sm--line-height: 40px;
+    --text-display-sm--letter-spacing: -0.02em;
+    --text-display-sm--font-weight: 700;
+
+    --text-headline-lg: 28px;
+    --text-headline-lg--line-height: 36px;
+    --text-headline-lg--letter-spacing: -0.01em;
+    --text-headline-lg--font-weight: 700;
+
+    --text-headline-md: 22px;
+    --text-headline-md--line-height: 30px;
+    --text-headline-md--font-weight: 600;
+
+    --text-headline-sm: 18px;
+    --text-headline-sm--line-height: 26px;
+    --text-headline-sm--font-weight: 600;
+
+    --text-body-lg: 16px;
+    --text-body-lg--line-height: 24px;
+
+    --text-body-md: 14px;
+    --text-body-md--line-height: 22px;
+
+    --text-body-sm: 12px;
+    --text-body-sm--line-height: 18px;
+
+    --text-label-lg: 14px;
+    --text-label-lg--line-height: 20px;
+    --text-label-lg--font-weight: 600;
+
+    --text-label-md: 12px;
+    --text-label-md--line-height: 16px;
+    --text-label-md--font-weight: 600;
+
+    --text-label-sm: 10px;
+    --text-label-sm--line-height: 14px;
+    --text-label-sm--font-weight: 700;
+
+    /* Main Color Palette */
+    --color-primary: #5c6300;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #e7f653;
+    --color-on-primary-container: #677000;
+
+    --color-secondary: #006a68;
+    --color-on-secondary: #ffffff;
+    --color-secondary-container: #92efed;
+    --color-on-secondary-container: #006e6d;
+
+    --color-tertiary: #556160;
+    --color-on-tertiary: #ffffff;
+    --color-tertiary-container: #e2eeed;
+    --color-on-tertiary-container: #616c6c;
+
+    /* Surface Colors */
+    --color-surface: #f9f9ff;
+    --color-surface-dim: #d3daea;
+    --color-surface-bright: #f9f9ff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f0f3ff;
+    --color-surface-container: #e7eefe;
+    --color-surface-container-high: #e2e8f8;
+    --color-surface-container-highest: #dce2f3;
+    --color-surface-variant: #dce2f3;
+
+    /* Text Colors */
+    --color-on-surface: #151c27;
+    --color-on-surface-variant: #474835;
+    --color-on-background: #151c27;
+
+    /* Other Colors */
+    --color-background: #f9f9ff;
+    --color-error: #ba1a1a;
+    --color-on-error: #ffffff;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+    --color-outline: #787963;
+    --color-outline-variant: #c8c8af;
+    --color-inverse-surface: #2a313d;
+    --color-inverse-on-surface: #ebf1ff;
+    --color-surface-tint: #5c6300;
+
+    /* Fixed Colors */
+    --color-primary-fixed: #deed4a;
+    --color-primary-fixed-dim: #c2d02e;
+    --color-on-primary-fixed: #1a1d00;
+    --color-on-primary-fixed-variant: #454b00;
+
+    --color-secondary-fixed: #95f2f0;
+    --color-secondary-fixed-dim: #78d6d3;
+    --color-on-secondary-fixed: #00201f;
+    --color-on-secondary-fixed-variant: #00504e;
+
+    --color-tertiary-fixed: #d9e5e4;
+    --color-tertiary-fixed-dim: #bdc9c8;
+    --color-on-tertiary-fixed: #121d1d;
+    --color-on-tertiary-fixed-variant: #3d4949;
+
+    /* Border Radius */
+    --radius: 1rem;
+    --radius-lg: 2rem;
+    --radius-xl: 3rem;
+    --radius-full: 9999px;
+
+    /* Spacing */
+    --spacing-gutter: 1.5rem;
+    --spacing-gutter-sm: 1rem;
+    --spacing-margin: 2.5rem;
+    --spacing-margin-mobile: 1rem;
+    --spacing-space-xs: 0.25rem;
+    --spacing-space-sm: 0.5rem;
+    --spacing-space-md: 1rem;
+    --spacing-space-lg: 1.5rem;
+    --spacing-space-xl: 2rem;
+}
+
+@layer base {
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        overscroll-behavior: none;
+    }
 }

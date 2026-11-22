@@ -1,0 +1,350 @@
+
+# ============================================================
+# TUGAS KLASIFIKASI DAN CLUSTERING
+# NOMOR 2A - MODEL KLASIFIKASI (NIM GANJIL)
+# Nama  : Elok
+# NIM   : D121241077
+# Dataset: Telco Customer Churn (IBM)
+# Model : Logistic Regression
+# ============================================================
+
+# 1. IMPORT LIBRARY
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    confusion_matrix,
+    ConfusionMatrixDisplay,
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    classification_report
+)
+from sklearn.inspection import permutation_importance
+
+import warnings
+warnings.filterwarnings("ignore")
+
+print("Library berhasil diimpor!")
+
+
+# 2. LOAD DATASET
+
+print("\n=== MEMUAT DATASET ===")
+
+try:
+    dataset = fetch_openml(data_id=42178, as_frame=True)
+    df = dataset.frame.copy()
+
+    if "Churn" not in df.columns:
+        if dataset.target is not None:
+            df["Churn"] = dataset.target
+        else:
+            raise ValueError("Kolom Churn tidak ditemukan.")
+
+    print("Dataset berhasil diambil dari OpenML.")
+
+except Exception as e:
+    print("OpenML tidak berhasil diakses.")
+    print("Menggunakan salinan dataset IBM resmi sebagai alternatif.")
+
+    url = (
+        "https://raw.githubusercontent.com/IBM/"
+        "telco-customer-churn-on-icp4d/master/data/"
+        "Telco-Customer-Churn.csv"
+    )
+
+    df = pd.read_csv(url)
+
+print("\nUkuran dataset:", df.shape)
+print("\nLima data pertama:")
+print(df.head())
+
+print("\nInformasi dataset:")
+print(df.info())
+
+print("\nDistribusi Churn:")
+print(df["Churn"].value_counts())
+
+
+# 3. PREPROCESSING DATA
+
+print("\n=== PREPROCESSING DATA ===")
+
+# Mengubah TotalCharges menjadi numerik
+df["TotalCharges"] = pd.to_numeric(
+    df["TotalCharges"], errors="coerce"
+)
+
+# Mengisi TotalCharges kosong pada pelanggan baru
+df.loc[
+    df["TotalCharges"].isna() & (df["tenure"] == 0),
+    "TotalCharges"
+] = 0
+
+print(
+    "Missing value TotalCharges setelah penanganan:",
+    df["TotalCharges"].isna().sum()
+)
+
+# Mengubah SeniorCitizen menjadi kategorikal
+df["SeniorCitizen"] = df["SeniorCitizen"].astype(str)
+
+# Mengubah target menjadi angka
+df["Churn"] = df["Churn"].astype(str).str.strip()
+
+y = df["Churn"].map({
+    "No": 0,
+    "Yes": 1
+})
+
+if y.isna().any():
+    raise ValueError("Terdapat nilai target Churn yang tidak dikenali.")
+
+# Menghapus ID dan target dari fitur
+X = df.drop(
+    columns=["customerID", "Churn"],
+    errors="ignore"
+)
+
+# Memisahkan fitur numerik dan kategorikal
+numeric_features = X.select_dtypes(
+    include=["number"]
+).columns.tolist()
+
+categorical_features = X.select_dtypes(
+    exclude=["number"]
+).columns.tolist()
+
+print("\nFitur numerik:", numeric_features)
+print("\nFitur kategorikal:", categorical_features)
+
+# Preprocessing fitur numerik
+numeric_transformer = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="median")),
+    ("scaler", StandardScaler())
+])
+
+# Preprocessing fitur kategorikal
+categorical_transformer = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("encoder", OneHotEncoder(handle_unknown="ignore"))
+])
+
+# Menggabungkan preprocessing
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("num", numeric_transformer, numeric_features),
+        ("cat", categorical_transformer, categorical_features)
+    ]
+)
+
+print("\nPreprocessing berhasil disiapkan!")
+
+
+# 4. MEMBAGI DATA LATIH DAN DATA UJI
+
+print("\n=== PEMBAGIAN DATA ===")
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+print("Jumlah data latih:", len(X_train))
+print("Jumlah data uji:", len(X_test))
+
+
+# 5. MEMBANGUN MODEL KLASIFIKASI
+
+print("\n=== PEMODELAN LOGISTIC REGRESSION ===")
+
+model = Pipeline(steps=[
+    ("preprocessing", preprocessor),
+    ("classifier", LogisticRegression(
+        max_iter=2000,
+        class_weight="balanced",
+        random_state=42
+    ))
+])
+
+# Melatih model
+model.fit(X_train, y_train)
+
+print("Model berhasil dilatih!")
+
+
+# 6. PREDIKSI DATA UJI
+
+y_pred = model.predict(X_test)
+
+
+# 7. EVALUASI MODEL
+
+print("\n=== HASIL EVALUASI MODEL ===")
+
+# Confusion Matrix
+cm = confusion_matrix(
+    y_test,
+    y_pred,
+    labels=[0, 1]
+)
+
+cm_df = pd.DataFrame(
+    cm,
+    index=["Aktual No Churn", "Aktual Yes Churn"],
+    columns=["Prediksi No Churn", "Prediksi Yes Churn"]
+)
+
+print("\nConfusion Matrix:")
+print(cm_df)
+
+# Menghitung metrik
+accuracy = accuracy_score(y_test, y_pred)
+
+precision = precision_score(
+    y_test, y_pred, zero_division=0
+)
+
+recall = recall_score(
+    y_test, y_pred, zero_division=0
+)
+
+f1 = f1_score(
+    y_test, y_pred, zero_division=0
+)
+
+print("\nAccuracy :", round(accuracy, 4))
+print("Precision:", round(precision, 4))
+print("Recall   :", round(recall, 4))
+print("F1-Score :", round(f1, 4))
+
+print("\nClassification Report:")
+print(
+    classification_report(
+        y_test,
+        y_pred,
+        target_names=["No Churn", "Churn"],
+        zero_division=0
+    )
+)
+
+
+# 8. VISUALISASI CONFUSION MATRIX
+
+print("\n=== VISUALISASI CONFUSION MATRIX ===")
+
+disp = ConfusionMatrixDisplay(
+    confusion_matrix=cm,
+    display_labels=["No Churn", "Churn"]
+)
+
+disp.plot(cmap="Blues", values_format="d")
+
+plt.title("Confusion Matrix - Logistic Regression")
+plt.show()
+
+
+# 9. ANALISIS FITUR PALING BERPENGARUH
+
+print("\n=== FEATURE IMPORTANCE ===")
+
+# Menggunakan Permutation Importance
+importance = permutation_importance(
+    model,
+    X_test,
+    y_test,
+    n_repeats=10,
+    random_state=42,
+    scoring="f1",
+    n_jobs=-1
+)
+
+importance_df = pd.DataFrame({
+    "Fitur": X_test.columns,
+    "Importance": importance.importances_mean,
+    "Std": importance.importances_std
+})
+
+importance_df = importance_df.sort_values(
+    by="Importance",
+    ascending=False
+)
+
+print("\nRanking fitur berdasarkan pengaruhnya:")
+print(importance_df.to_string(index=False))
+
+# Mengambil 10 fitur teratas
+top_features = importance_df.head(10).sort_values(
+    by="Importance"
+)
+
+# Visualisasi
+plt.figure(figsize=(10, 6))
+
+plt.barh(
+    top_features["Fitur"],
+    top_features["Importance"]
+)
+
+plt.xlabel("Permutation Importance (F1)")
+plt.ylabel("Fitur")
+
+plt.title(
+    "10 Fitur Paling Berpengaruh terhadap Customer Churn"
+)
+
+plt.tight_layout()
+plt.show()
+
+# Fitur paling berpengaruh
+print(
+    "\nFitur dengan pengaruh terbesar:",
+    importance_df.iloc[0]["Fitur"]
+)
+
+
+# 10. KESIMPULAN OTOMATIS
+
+print("\n=== KESIMPULAN HASIL KLASIFIKASI ===")
+
+print(
+    "Model yang digunakan adalah Logistic Regression."
+)
+
+print(
+    f"Model memperoleh Accuracy sebesar {accuracy:.4f}."
+)
+
+print(
+    f"Precision sebesar {precision:.4f}."
+)
+
+print(
+    f"Recall sebesar {recall:.4f}."
+)
+
+print(
+    f"F1-Score sebesar {f1:.4f}."
+)
+
+print(
+    "Fitur yang paling berpengaruh berdasarkan "
+    "Permutation Importance adalah:",
+    importance_df.iloc[0]["Fitur"]
+)
+
+print("\n=== PROSES KLASIFIKASI SELESAI ===")
