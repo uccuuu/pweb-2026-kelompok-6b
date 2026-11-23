@@ -3,12 +3,12 @@
     'laporanKerusakan' => [],
     'jumlahBaru' => 3,
     'jumlahBelumSelesai' => 8,
-    'jumlahDitampilkan' => 3,
+    'jumlahDitampilkan' => 4,
     'linkSemua' => '#',
 ])
 
-<div class="lg:col-span-7 flex flex-col gap-6">
-    <div class="bg-surface-container-lowest rounded-[28px] p-6 lg:p-8 shadow-[0_12px_32px_-4px_rgba(23,34,34,0.05)]">
+<div class="lg:col-span-7 flex flex-col gap-6 h-full">
+    <div class="h-full flex flex-col bg-surface-container-lowest rounded-[28px] p-6 lg:p-8 shadow-[0_12px_32px_-4px_rgba(23,34,34,0.05)]">
 
         {{-- Header --}}
         <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 gap-4">
@@ -27,10 +27,6 @@
                             {{ $jumlahBaru }} BARU
                         </span>
                     </div>
-
-                    <p class="font-body-sm text-body-sm text-on-surface-variant">
-                        Inspeksi langsung pelaporan via QR Code staf & publik
-                    </p>
                 </div>
             </div>
 
@@ -41,7 +37,7 @@
         </div>
 
         {{-- Daftar Laporan --}}
-        <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-0.5">
             @forelse ($laporanKerusakan as $laporan)
                 <div class="rounded-2xl p-5 bg-surface-container-low/60 hover:bg-surface-container-low transition-all">
 

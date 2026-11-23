@@ -1,11 +1,10 @@
-
 @props([
     'asetTerbaru' => [],
+    'linkSemua' => '#',
 ])
 
-<div class="bg-surface-container-lowest rounded-[28px] p-6 lg:p-7 shadow-[0_12px_32px_-4px_rgba(23,34,34,0.05)]">
-
-    {{-- Header --}}
+{{-- Header --}}
+<div class="h-full flex flex-col bg-surface-container-lowest rounded-[28px] p-6 lg:p-7 shadow-[0_12px_32px_-4px_rgba(23,34,34,0.05)]">
     <div class="flex items-center justify-between mb-5">
         <div class="flex items-center gap-2.5">
             <span class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface">
@@ -18,15 +17,11 @@
                 Aset Baru
             </h3>
         </div>
-
-        <span class="px-2.5 py-1 rounded-full bg-secondary-fixed/50 text-on-secondary-fixed font-label-sm text-label-sm font-bold">
-            {{ count($asetTerbaru) }} Ditambahkan
-        </span>
     </div>
 
     {{-- Daftar Aset --}}
     <div class="flex flex-col gap-4">
-        @forelse ($asetTerbaru as $aset)
+        @forelse (collect($asetTerbaru)->take(2) as $aset)
             <div class="p-4 rounded-2xl bg-surface-container-low/50 hover:bg-surface-container-low transition-all">
 
                 {{-- PIC --}}
@@ -84,7 +79,7 @@
                 {{-- Aksi --}}
                 <div class="mt-3 pt-2 flex items-center justify-between gap-2">
                     <span class="font-label-sm text-label-sm text-tertiary">
-                        Kondisi: {{ $aset['kondisi'] }}
+                        <x-admin.status-kondisi :kondisi="$aset['kondisi']" />
                     </span>
 
                     <button type="button"
@@ -104,6 +99,19 @@
                 </p>
             </div>
         @endforelse
+        </a>
+    </div>
+    {{-- Footer --}}
+    <div class="mt-auto pt-5 flex items-center justify-end">
+        <a href="{{ $linkSemua }}"
+            class="inline-flex items-center gap-2 font-label-md text-label-md font-bold text-secondary hover:text-on-secondary-container transition-colors">
+
+            <span>Lihat Semua Aset ({{ count($asetTerbaru) }})</span>
+
+            <span class="material-symbols-outlined text-[18px]">
+                arrow_forward
+            </span>
+        </a>
     </div>
 
 </div>

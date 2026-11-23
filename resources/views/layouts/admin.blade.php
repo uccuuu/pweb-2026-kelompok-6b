@@ -18,7 +18,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-[#C9D8DE] via-[#EFF1D7] to-[#D7E5E1] font-body-md text-body-md text-on-surface antialiased">
+<body
+    class="min-h-screen font-body-md text-body-md text-on-surface antialiased"
+    style="background: linear-gradient(
+        to bottom right,
+        #B4CAD2 0%,
+        #E8EACB 50%,
+        #B4CAD2 100%
+    );"
+>
+
 
     @include('components.admin.header')
 

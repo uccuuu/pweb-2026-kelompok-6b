@@ -14,7 +14,7 @@
     @endphp
 
     <main class="w-full pt-24 min-h-[calc(100vh-100px)]">
-        <div class="w-full max-w-none mx-auto px-4 lg:px-6 py-4">
+        <div class="mx-auto px-10 pt-1 pb-4">
             <div class="flex flex-col w-full pb-16">
 
                 <!-- Top Command & Action Bar -->
@@ -35,8 +35,8 @@
                     <div class="flex flex-wrap items-center gap-3">
                         <button type="button"
                             class="flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg font-bold shadow-[0_8px_20px_-3px_rgba(103,112,0,0.25)] hover:brightness-105 active:scale-95 transition-all">
-                            <span class="material-symbols-outlined text-[20px]">add_circle</span>
-                            <span>Tambah Aset Baru</span>
+                            <span class="material-symbols-outlined text-[20px]">add</span>
+                            <span>Tambah Barang</span>
                         </button>
                     </div>
                 </div>
@@ -58,15 +58,15 @@
                 </div>
 
                 <!-- Main Content -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
-                <x-admin.damage-report-list
-                    :laporan-kerusakan="$laporanKerusakan"
-                    :jumlah-baru="3"
-                    :jumlah-belum-selesai="8"
-                    :jumlah-ditampilkan="3"
-                    :link-semua="url('/admin/laporan-kerusakan')"
-                />
+                    <x-admin.damage-report-list
+                        :laporan-kerusakan="$laporanKerusakan"
+                        :jumlah-baru="3"
+                        :jumlah-belum-selesai="8"
+                        :jumlah-ditampilkan="3"
+                        :link-semua="url('/admin/laporan-kerusakan')"
+                    />
 
                     <!-- RIGHT COLUMN -->
                     <div class="lg:col-span-5 flex flex-col gap-6">
@@ -78,7 +78,9 @@
 
                         <x-admin.new-assets
                             :aset-terbaru="$asetTerbaru"
+                            :link-semua="route('admin.katalog')"
                         />
+
                     </div>
                 </div>
             </div>
