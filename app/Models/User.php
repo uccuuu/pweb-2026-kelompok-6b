@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -21,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'unit_kerja_id',
+        'jabatan',
+        'foto',
     ];
 
     /**
@@ -42,7 +47,51 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
+    }
+
+    // ─── Helper ──────────────────────────────────────────────────────────────
+
+    /**
+     * Cek apakah user adalah Admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Cek apakah user adalah Staf.
+     */
+    public function isStaf(): bool
+    {
+        return $this->role === 'staf';
+    }
+
+    // ─── Relasi ──────────────────────────────────────────────────────────────
+
+    /**
+     * Setiap user terdaftar pada satu unit kerja (nullable untuk Admin).
+     */
+    public function unitKerja(): BelongsTo
+    {
+        return $this->belongsTo(UnitKerja::class);
+    }
+
+    /**
+     * Staf dapat menjadi penanggung jawab (PIC) banyak barang.
+     */
+    public function barangs(): HasMany
+    {
+        return $this->hasMany(Barang::class);
+    }
+
+    /**
+     * Pengguna dapat mengirimkan banyak laporan kerusakan.
+     */
+    public function laporanKerusakans(): HasMany
+    {
+        return $this->hasMany(LaporanKerusakan::class);
     }
 }
